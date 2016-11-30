@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.youxia.mapping.userMapper">
+	<!--查询用户信息-->
+	<select id="queryUser" parameterType="map" resultType="com.youxia.bean.UserBean">
+		SELECT user.userid AS userId, user.username AS userName, user.nickname AS nickName, user.password, user.sex, user.birthday, user.mobile, user.plate_number AS plateNumber, user.imageurl AS imageUrl,
+		user.area, user.rank, user.create_date AS createDate, user.register_ip AS registerIp, user.points, user.sign_in AS signIn, user.is_locked AS isLocked, user.locked_date AS lockedDate, user.login_date AS loginDate,
+		user.login_count AS loginCount, user.login_fail_count AS loginFailCount, user.login_ip AS loginIp, area.full_name AS areaDesc FROM USERS AS user, AREA AS area   
+		<where>
+			user.area = area.id
+		 	<if test="userId != 0">
+				AND user.userid = #{userId}		 
+		 	</if>
+		 	<if test="userName != null and userName != ''">
+		 		AND user.username = #{userName}
+		 	</if>
+		</where>
+	</select>
+	
+	<!-- 更新用户信息 -->
+	<update id="updateUser" parameterType="com.youxia.bean.UserBean">
+		UPDATE users
+		<set>
+			<if test="nickName != null and nickName != ''">
+				nickname = #{nickName},
+			</if>
+			<if test="password != null and  password != ''">
+				password = #{password},
+			</if>
+			<if test="sex != 0">
+				sex = #{sex},
+			</if>
+			<if test="birthday != null and birthday != ''">
+				birthday = #{birthday},
+			</if>
+			<if test="mobile != null and  mobile != ''">
+				mobile = #{mobile},
+			</if>
+			<if test="plateNumber != null and plateNumber != ''">
+				plate_number = #{plateNumber},
+			</if>
+			<if test="imageUrl != null and imageUrl != ''">
+				imageurl = #{imageUrl},
+			</if>
+			<if test="area != 0">
+				area = #{area},
+			</if>
+			<if test="points != 0">
+				points = #{points},
+			</if>
+			<if test="signIn != 0">
+				sign_in = #{signIn},
+			</if>
+			<if test="isLocked != null and isLocked != 0">
+				is_locked = #{isLocked},
+			</if>
+			<if test="lockedDate != null and lockedDate != ''">
+				locked_date = #{lockedDate},
+			</if>
+			<if test="loginDate != null and loginDate != ''">
+				login_date = #{loginDate},
+			</if>
+			<if test="loginCount != 0">
+				login_count = #{loginCount},
+			</if>
+			<if test="loginFailCount != -1">
+				login_fail_count = #{loginFailCount},
+			</if>
+			<if test="loginIp != null and loginIp != ''">
+				login_ip = #{loginIp},
+			</if>
+		</set>
+		WHERE userid = #{userId}
+	</update>
+
+</mapper>

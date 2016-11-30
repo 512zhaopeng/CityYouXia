@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.youxia.mapping.helpMapper">
+	<!-- 添加求助信息-->
+	<insert id="addHelp" parameterType="com.youxia.bean.HelpBean" useGeneratedKeys="true" keyProperty="helpId">
+		<![CDATA[
+		INSERT INTO help(categoryid, name, content, userid, area, longitude, latitude, site, help_flag, reward_points) VALUES
+		(#{categoryId}, #{name}, #{content}, #{userId}, #{area}, #{longitude}, #{latitude}, #{site}, #{helpFlag}, #{rewardPoints})
+		]]>
+	</insert>
+	
+	<!-- 更改求助信息 -->
+	<update id="updateHelp" parameterType="com.youxia.bean.HelpBean">
+		UPDATE help
+		<set>
+			<if test="categoryId != 0">
+				categoryid = #{categoryId},
+			</if>
+			<if test="name != ''">
+				name = #{name},
+			</if>
+			<if test="content != ''">
+				content = #{content},
+			</if>
+			<if test="area != 0">
+				area = #{area},
+			</if>
+			<if test="longitude != 0.0">
+				longitude = #{longitude},
+			</if>
+			<if test="latitude != 0.0">
+				latitude = #{latitude},
+			</if>
+			<if test="site != ''">
+				site = #{site},
+			</if>
+			<if test="helpFlag != 0">
+				help_flag = #{helpFlag},
+			</if>
+			<if test="helpUserId != 0">
+				help_userid = #{helpUserId},
+			</if>
+			<if test="helpUserName != ''">
+				help_username = #{helpUserName},
+			</if>
+			<if test="helpDate != '' and helpDate != null">
+				help_date = #{helpDate},
+			</if>
+			<if test="rewardPoints != 0">
+				reward_points = #{rewardPoints},
+			</if>
+			<if test="isSolve != 0">
+				is_solve = #{isSolve},
+			</if>
+			<if test="viewCount != 0">
+				viewcount = #{viewCount},
+			</if>
+			<if test="commentCount != 0">
+				commentcount = #{commentCount},
+			</if>
+		</set>
+		WHERE helpid = #{helpId}
+	</update>
+	
+	<!-- 查询求助信息(列表/详细信息),联合查询发布者信息 -->
+	<select id="queryHelp" parameterType="map" resultType="com.youxia.bean.HelpBean">
+		SELECT help.helpid AS helpId, help.categoryid AS categoryId, help.name, help.content, help.userid AS userId, help.area, help.longitude, help.latitude, help.site,
+		help.help_flag AS helpFlag, help.help_userid AS helpUserId, help.help_username AS helpUserName, help.help_date AS helpDate, help.reward_points AS rewardPoints,
+		help.is_solve AS isSolve, help.viewcount AS viewCount, help.commentcount AS commentCount, help.create_date AS createDate, 
+		users.username AS createUserName, users.nickname AS createUserNickName, users.imageurl AS userPhoto, users.sex FROM help JOIN users ON help.userid = users.userid 
+		<where>
+		 <if test="helpId != 0">
+			helpid = #{helpId}		 
+		 </if>
+		 <if test="categoryId != 0">
+		 	AND categoryid = #{categoryId}
+		 </if>
+		 <if test="userId != 0">
+		 	AND userid = #{userId}
+		 </if>
+		 <if test="area != 0">
+		 	AND area = #{area}
+		 </if>
+		 <if test="helpFlag != 0">
+		 	AND help_flag = #{helpFlag}
+		 </if>
+		 <if test="helpUserId != 0">
+		 	AND help_userid = #{helpUserId}
+		 </if>
+		 <if test="isSolve != 0">
+		 	AND is_solve = #{isSolve}
+		 </if>
+		</where>
+		ORDER BY createDate DESC
+		<if test="startIndex!=-1 and pageSize != -1">
+			LIMIT #{startIndex}, #{pageSize}
+		</if>
+		
+	</select>
+	
+	<!-- 查询帮助图片 -->
+	<select id="queryHelpImages" parameterType="int" resultType="com.youxia.bean.HelpImageBean">
+		SELECT imageid AS imageId, orders, name, imageurl AS imageUrl, create_date AS createDate, modify_date AS modifyDate
+		FROM HELP_IMAGES WHERE helpid = #{helpId}
+		<if test="startIndex!=-1 and pageSize != -1">
+			LIMIT #{startIndex}, #{pageSize}
+		</if>
+	</select>
+	
+	<!-- 添加帮助救援图片 -->
+	<insert id="addHelpImage" parameterType="com.youxia.bean.HelpImageBean" useGeneratedKeys="true" keyProperty="imageId">
+		INSERT INTO HELP_IMAGES (helpid, orders, name, imageurl) VALUES (#{helpId}, #{orders}, #{name}, #{imageUrl})
+	</insert>
+	
+	<!-- 
+	<delete id="delHelpImage" parameterType="int">
+		DELETE FROM HELP_IMAGES WHERE imageid = 
+	</delete>
+	 -->
+	
+	<!-- 查询帮助的总评论次数 -->
+	<select id="queryHelpCommentsCount" parameterType="int" resultType="int">
+		SELECT COUNT(commentid) FROM help_comment WHERE helpid = #{helpid}
+	</select>
+	
+	
+	<!-- 查询帮助评论 -->
+	<select id="queryHelpComments" parameterType="int" resultType="com.youxia.bean.HelpCommentBean">
+		SELECT comment.commentid AS commentId, comment.helpid AS helpId, comment.userid AS userId, comment.content, comment.comment_date AS commentDate,
+		users.nickname AS commentUserName, users.imageurl AS commentUserPhoto, users.sex FROM HELP_COMMENT AS comment JOIN USERS AS users ON comment.userid = users.userid
+		<where>
+			<if test="helpId != 0">
+				helpid = #{helpId}		 
+		 	</if>
+		</where>
+		ORDER BY commentDate DESC
+		<if test="startIndex!=-1 and pageSize != -1">
+			LIMIT #{startIndex}, #{pageSize}
+		</if>
+	</select>
+	
+	<!--添加 帮助评论-->
+	<insert id="addHelpComment" parameterType="com.youxia.bean.HelpCommentBean" useGeneratedKeys="true" keyProperty="commentId">
+		INSERT INTO HELP_COMMENT (helpid, userid, content) VALUES (#{helpId}, #{userId}, #{content})
+	</insert>
+	
+</mapper>
