@@ -71,6 +71,12 @@ public class CommFunc {
         return df.format(time);
     }
     
+    //Timestamp-->Date
+    
+    //TimeStamp-->Calendar
+    
+    
+    
     //获取当前时间的Timestamp
     public static Timestamp getNowTimestamp(){
     	return Timestamp.valueOf(formatDate(new Date(), (byte)1));
@@ -84,7 +90,7 @@ public class CommFunc {
         return aim;
     }
 
-    //判断两个日期是否同月
+    //判断两个日期是否为同一月份
     public static boolean isSameMonth(Calendar calendar1, Calendar calendar2){
         int month1 = calendar1.get(Calendar.MONTH);
         int month2 = calendar2.get(Calendar.MONTH);        
