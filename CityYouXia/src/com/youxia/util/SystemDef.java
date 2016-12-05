@@ -3,9 +3,6 @@ package com.youxia.util;
 public class SystemDef {
 	
 	public static final String APP_REGISTER_MESSAGE_SESSION = "app_register_msg_session";
-	
-	public static final byte OPERTYPE_SUCCESS = 0;
-	public static final byte OPERTYPE_FAIL    = 1;
 
 	public static final String HELPIMAGE_BASEPATH = "/helpImages";
 	public static final String USERPHOTO_BASEPATH = "/userImages";
@@ -35,6 +32,9 @@ public class SystemDef {
 	public static final byte LOGIN_ONLINE_ERROR  = 6;   //用户已经登录
 	public static final byte LOGIN_TIMEOUT_ERROR = 7;   //用户登录超时
 	public static final byte LOGIN_LOCK_ERROR    = 8;   //用户锁定
+	
+	//注册返回错误码
+	public static final byte REGISTE_USER_EXIST = 11;	//用户已经存在
 	
 	
 	

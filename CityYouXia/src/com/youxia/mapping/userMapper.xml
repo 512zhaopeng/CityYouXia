@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.youxia.mapping.userMapper">
+	<insert id="addUserBean" parameterType="com.youxia.bean.UserBean" useGeneratedKeys="true" keyProperty="userId">
+		INSERT INTO USERS(password, mobile) values(#{password}, #{mobile})
+	</insert>
+	
+	
 	<!--查询用户信息-->
 	<select id="queryUser" parameterType="map" resultType="com.youxia.bean.UserBean">
 		SELECT user.userid AS userId, user.username AS userName, user.nickname AS nickName, user.password, user.sex, user.birthday, user.mobile, user.plate_number AS plateNumber, user.imageurl AS imageUrl,
 		user.area, user.rank, user.create_date AS createDate, user.register_ip AS registerIp, user.points, user.sign_in AS signIn, user.is_locked AS isLocked, user.locked_date AS lockedDate, user.login_date AS loginDate,
-		user.login_count AS loginCount, user.login_fail_count AS loginFailCount, user.login_ip AS loginIp, area.full_name AS areaDesc FROM USERS AS user, AREA AS area   
+		user.login_count AS loginCount, user.login_fail_count AS loginFailCount, user.login_ip AS loginIp, area.full_name AS areaDesc FROM USERS AS user LEFT JOIN AREA AS area ON user.area = area.id  
 		<where>
-			user.area = area.id
 		 	<if test="userId != 0">
 				AND user.userid = #{userId}		 
 		 	</if>
 		 	<if test="userName != null and userName != ''">
 		 		AND user.username = #{userName}
+		 	</if>
+		 	<if test="mobile != null and mobile != ''">
+		 		AND user.mobile = #{mobile}
 		 	</if>
 		</where>
 	</select>
@@ -21,6 +28,9 @@
 	<update id="updateUser" parameterType="com.youxia.bean.UserBean">
 		UPDATE users
 		<set>
+			<if test="userName != null and userName != ''">
+				username = #{userName},
+			</if>
 			<if test="nickName != null and nickName != ''">
 				nickname = #{nickName},
 			</if>

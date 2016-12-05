@@ -1,11 +1,14 @@
 package com.youxia.test;
 
+import java.io.IOException;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.youxia.service.HelpService;
 
@@ -19,9 +22,9 @@ public class HelpServiceTest {
 	@Resource(name="helpService")
 	private HelpService service;
 	
-	//@Test
+	@Test
 	public void queryHelpList(){
-		System.out.println(this.service.queryRoadRescueList(-1, -1));
+		System.out.println(this.service.queryRoadRescueList(1, 5));
 	}
 	
 	//@Test
@@ -40,8 +43,9 @@ public class HelpServiceTest {
 	}
 	
 	//@Test
-	public void addHelp(){
-		//System.out.println(this.service.addHelp(2, "自行车坏了", 1, "新石中路自行车链子掉了，走不了了，拖车！", 23, "红旗大街新石中路", 117.165, 32.051, 30));
+	public void addHelp() throws IOException{
+		MultipartFile[] fileArray = null;
+		System.out.println(this.service.addHelp(2, "自行车坏了", 1, "新石中路自行车链子掉了，走不了了，拖车！", 23, "红旗大街新石中路", 117.165, 32.051, 30, fileArray));
 	}
 	
 	//@Test

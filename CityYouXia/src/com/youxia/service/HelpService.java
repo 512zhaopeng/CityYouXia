@@ -124,6 +124,9 @@ public class HelpService {
 		bean.setIsSolve((byte)1);				//1=未解决 2=已解决
 		
 		int helpId = helpDao.addHelpToId(bean);
+		if(fileArray == null) 
+			return SystemDef.OPER_SUCCESS;
+		
 		if(helpId > 0){
 			//循环添加图片
 			for(int i=0,nums=fileArray.length; i<nums; i++){
@@ -133,7 +136,7 @@ public class HelpService {
 		}
 		
 		
-		return SystemDef.OPERTYPE_SUCCESS;
+		return SystemDef.OPER_SUCCESS;
 	}
 
 	/**
@@ -151,8 +154,8 @@ public class HelpService {
 		bean.setLatitude(latitude);
 		bean.setRewardPoints(rewardPoints);
 	
-		if(helpDao.updateHelp(bean)) return SystemDef.OPERTYPE_SUCCESS;
-		else					     return SystemDef.OPERTYPE_FAIL;
+		if(helpDao.updateHelp(bean)) return SystemDef.OPER_SUCCESS;
+		else					     return SystemDef.OPER_FAIL;
 	}
 	
 	/**
@@ -161,7 +164,7 @@ public class HelpService {
 	public JSONArray queryHelpList(int categoryId, byte isSolve, int nowPage, int pageSize){
 		int startIndex = -1;
 		if(nowPage != -1 && pageSize != -1){
-			startIndex = pageSize * (nowPage - 1) + 1;
+			startIndex = pageSize * (nowPage - 1); //数据库中分页从0开始，不要减一
 		}
 			
 		List<HelpBean> list = this.helpDao.queryHelpList(categoryId, isSolve, startIndex, pageSize);
@@ -200,9 +203,9 @@ public class HelpService {
 		bean.setName(name);
 		bean.setImageUrl(imageUrl);
 		if(this.helpDao.addHelpImage(bean)) 
-			return SystemDef.OPERTYPE_SUCCESS;
+			return SystemDef.OPER_SUCCESS;
 		else					  			
-			return SystemDef.OPERTYPE_FAIL;
+			return SystemDef.OPER_FAIL;
 	}
 	
 	/**
@@ -232,9 +235,9 @@ public class HelpService {
 		bean.setUserId(userId);
 		
 		if(this.helpDao.addHelpComment(bean))
-			return SystemDef.OPERTYPE_SUCCESS;
+			return SystemDef.OPER_SUCCESS;
 		else
-			return SystemDef.OPERTYPE_FAIL;
+			return SystemDef.OPER_FAIL;
 	}
 	
 	/**

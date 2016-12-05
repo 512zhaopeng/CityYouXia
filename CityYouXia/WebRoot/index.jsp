@@ -25,9 +25,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<input type="text"  id="content"/>
     <input type="button" value="ajax-get" id="btn"/>
     
-    <form action="<%=basePath%>fileOper/uploadHelpImageByFile.do" method="post" enctype="multipart/form-data">   
-		<input name="image" id="image1" type="file" /><br>
-		<input name="image" id="image2" type="file" /><br>
+    <form action="<%=basePath%>fileOper/uploadHelpImage.do" method="post" enctype="multipart/form-data">   
+		<input name="image1" id="image1" type="file" /><br>
+		<input name="image2" id="image2" type="file" /><br>
 		<input name="helpId" id="helpId" value="1"/><br>
 		<input name="name" id="name" value="好惨"/><br>
 		<input type="submit" value="上传"/>

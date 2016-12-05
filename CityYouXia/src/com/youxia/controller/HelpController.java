@@ -54,13 +54,13 @@ public class HelpController {
 		fileArray[3] = file4;
 		fileArray[4] = file5;
 
-		byte result = SystemDef.OPERTYPE_SUCCESS;
+		byte result = SystemDef.OPER_SUCCESS;
 		try{
 			//容错，先不写测试时再说
 			this.helpService.addRoadRescueHelp(userId, name, content, area, site, longitude, latitude, rewardPoints, fileArray);
 		}
 		catch (Exception e) {
-			result = SystemDef.OPERTYPE_FAIL;
+			result = SystemDef.OPER_FAIL;
 		}
 		
 		response.getWriter().write(String.valueOf(result));
@@ -234,7 +234,7 @@ public class HelpController {
 	/**
 	 * 添加寻人信息 
 	 * */
-	@RequestMapping(value = "/addPeopleSearchHelp", method= RequestMethod.GET)
+	@RequestMapping(value = "/addFindPeopleHelp", method= RequestMethod.GET)
 	public void addPeopleSearchHelp(
 			@RequestParam(value="userId", 		required=true) int userId,
 			@RequestParam(value="name",   		required=true) String  name,
@@ -263,13 +263,13 @@ public class HelpController {
 		fileArray[2] = file3;
 		fileArray[3] = file4;
 		fileArray[4] = file5;
-		byte result = SystemDef.OPERTYPE_SUCCESS;
+		byte result = SystemDef.OPER_SUCCESS;
 		try{
 			//容错，先不写测试时再说
 			 this.helpService.addPeopleSearchHelp(userId, name, content, area, site, longitude, latitude, rewardPoints, fileArray);
 		}
 		catch (Exception e) {
-			result = SystemDef.OPERTYPE_FAIL;
+			result = SystemDef.OPER_FAIL;
 		}
 		
 		response.getWriter().write(String.valueOf(result));
@@ -280,7 +280,7 @@ public class HelpController {
 	/**
 	 * 更新寻人信息(发布者自己)
 	 * */
-	@RequestMapping(value = "/updatePeopleSearchHelp", method= RequestMethod.GET)
+	@RequestMapping(value = "/updateFindPeopleHelp", method= RequestMethod.GET)
 	public void updatePeopleSearchHelp(
 			@RequestParam(value="helpId", 		required=true) int helpId,
 			@RequestParam(value="name",   		required=false) String name,
@@ -313,7 +313,7 @@ public class HelpController {
 	/**
 	 * 获取寻人列表
 	 * */
-	@RequestMapping(value = "/queryPeopleSearchList", method = RequestMethod.GET)
+	@RequestMapping(value = "/queryFindPeopleList", method = RequestMethod.GET)
 	public void queryPeopleSearchList(
 			@RequestParam(value="nowPage", 	  required=true) int nowPage,
 			@RequestParam(value="pageSize",   required=true) int pageSize,			
@@ -333,7 +333,7 @@ public class HelpController {
 	/**
 	 * 获取寻人详细信息
 	 * */
-	@RequestMapping(value = "/queryPeopleSearchDetail", method = RequestMethod.GET)
+	@RequestMapping(value = "/queryFindPeopleDetail", method = RequestMethod.GET)
 	public void queryPeopleSearchDetail(
 			@RequestParam(value="helpId", required=true) int helpId,
 			HttpServletResponse response) throws IOException{

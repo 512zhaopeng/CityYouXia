@@ -17,6 +17,29 @@ public class UserService {
 	private UserDao userDao;
 	
 	/**
+	 * 用户注册,手机号
+	 * */
+	public JSONObject registeUser(String mobile){
+		JSONObject json = new JSONObject(); 
+		UserBean user = this.userDao.queryUserByMobile(mobile);
+		if(user != null){
+			json.put("errorCode", SystemDef.REGISTE_USER_EXIST);
+		}
+		else{
+			user = new UserBean();
+			user.setMobile(mobile);
+			if(this.userDao.addUserBean(user)){
+				json.put("errorCode", SystemDef.OPER_SUCCESS);
+			}
+			else{
+				json.put("errorCode", SystemDef.OPER_FAIL);
+			}
+		}
+		return json;
+	}
+	
+	
+	/**
 	 * 用户名密码登录
 	 * */
 	public JSONObject loginCheckUser(String userName, String password){
@@ -31,11 +54,13 @@ public class UserService {
 		//判断用户是否被锁定
 		//锁定
 		Timestamp lockedDate = user.getLockedDate();
-		if(user.getIsLocked() == SystemDef.USER_LOCK_YES){
+		if(user.getIsLocked() == SystemDef.USER_LOCK_YES 
+				&& CommFunc.isTimestampSameDay(lockedDate, CommFunc.getNowTimestamp())){
 			json.put("errorCode", SystemDef.LOGIN_LOCK_ERROR);
 		}
 		else{
 			UserBean userNew = new UserBean();
+			//登录成功
 			if(password.equals(user.getPassword())){
 				json.put("errorCode", SystemDef.LOGIN_SUCCESS);
 				json.put("user", user.toLoginResult());
@@ -56,8 +81,9 @@ public class UserService {
 					json.put("errorDesc", "密码错误，今日账户已经被锁定！");
 					//更新用户状态
 					userNew.setUserId(user.getUserId());
-					userNew.setIsLocked(SystemDef.USER_LOCK_YES);
+					userNew.setIsLocked(SystemDef.USER_LOCK_YES);		//设置为锁定
 					userNew.setLockedDate(CommFunc.getNowTimestamp());
+					userNew.setLoginCount(0);							//失败次数置0
 				}
 				else{
 					json.put("errorCode", SystemDef.LOGIN_PWD_ERROR);
@@ -77,9 +103,6 @@ public class UserService {
 		return json;
 	}
 
-	
-	
-	
 	/**
 	 * 更新用户信息,返回json
 	 * */

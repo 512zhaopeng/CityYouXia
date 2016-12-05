@@ -32,7 +32,7 @@ function updateHelp(){
 	json.content = "豪车不能碰!"
 	
 	$.ajax({
-         url:'http://127.0.0.1:8099/CityYouXia/helpOper/updateHelp.do',
+         url:'http://1597e1873r.iask.in:20773/CityYouXia/helpOper/updateHelp.do',
          data:json,
          type:'post',
          cache : false,

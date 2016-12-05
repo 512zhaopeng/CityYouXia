@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.youxia.util.CommFunc;
 import com.youxia.util.SystemDef;
 
 @Service("fileOperService")
@@ -34,7 +35,14 @@ public class FileOperService {
 		StringBuffer fileName = new StringBuffer(helpId + "_" + System.currentTimeMillis()).append(".").append(originalFileName.split("\\.")[1]); 
 		
 		InputStream in = file.getInputStream();
-		File targetFile = new File(targetDir, fileName.toString());
+		
+		StringBuffer dirStr = new StringBuffer(targetDir).append("/").append(CommFunc.nowYMDInt());
+		File dir = new File(dirStr.toString());
+		if(!dir.exists() && !dir.isDirectory()){
+			dir.mkdir();
+		}
+			
+		File targetFile = new File(dirStr.toString(), fileName.toString());
 		FileOutputStream out = new FileOutputStream(targetFile);
 		IOUtils.copy(in, out);
 		
@@ -43,7 +51,7 @@ public class FileOperService {
 
         //添加图片到数据库
         byte result = this.helpService.addHelpImage(helpId, name, SystemDef.HELPIMAGE_BASEPATH + "/" + fileName.toString());
-        if(result == SystemDef.OPERTYPE_SUCCESS)
+        if(result == SystemDef.OPER_SUCCESS)
         	return 0;  //成功
         else
         	return 1;  //失败

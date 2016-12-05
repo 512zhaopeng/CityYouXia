@@ -30,15 +30,15 @@ public class SendShortMsgService {
 			String content = createRegisterContent(randomNumber);
 			if(sendMSGService(mobile, content)){
 				session.setAttribute(SystemDef.APP_REGISTER_MESSAGE_SESSION, randomNumber + "_" + mobile);
-				return SystemDef.OPERTYPE_SUCCESS;
+				return SystemDef.OPER_SUCCESS;
 			}
 			else{
-				return SystemDef.OPERTYPE_FAIL;
+				return SystemDef.OPER_FAIL;
 			}
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return SystemDef.OPERTYPE_FAIL;
+			return SystemDef.OPER_FAIL;
 		}
 	}
 	

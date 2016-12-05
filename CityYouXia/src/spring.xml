@@ -18,7 +18,7 @@
 		<property name="url"
 			value="jdbc:mysql://127.0.0.1:3306/cityyouxia?useUnicode=true&amp;characterEncoding=UTF-8" />
 		<property name="username" value="root" />
-		<property name="password" value="cityyouxia888" />
+		<property name="password" value="851004" />
 
 		<!-- 配置初始化大小、最小、最大 -->
 		<property name="initialSize" value="10" />

@@ -71,11 +71,41 @@ public class CommFunc {
         return df.format(time);
     }
     
-    //Timestamp-->Date
+    //获取当前年月日
+    public static int nowYMDInt(){
+    	Calendar calendar = Calendar.getInstance();
+    	return calendarToYMD(calendar); 
+    }
+    
+    //获取当前时分秒
+    public static int nowHMSInt(){
+    	Calendar calendar = Calendar.getInstance();
+    	if(calendar == null) return 0;
+    	return calendarToHMS(calendar); 
+    }
+    
+    //Calendar转化为yyyyMMdd
+    public static int calendarToYMD(Calendar calendar){
+    	if(calendar == null) return 0;
+    	return calendar.get(Calendar.YEAR) * 10000 
+    			+ (calendar.get(Calendar.MONTH) + 1) * 100 
+    			+ calendar.get(Calendar.DATE); 
+    }
+    
+    //Calendar转化为HMS
+    public static int calendarToHMS(Calendar calendar){
+    	if(calendar == null) return 0;
+    	return calendar.get(Calendar.HOUR_OF_DAY) * 10000 
+		+ (calendar.get(Calendar.MINUTE) + 1) * 100 
+		+ calendar.get(Calendar.SECOND); 
+    }
     
     //TimeStamp-->Calendar
-    
-    
+    public static Calendar timeStampToCalendar(Timestamp timeStamp){
+    	Calendar cal = Calendar.getInstance();
+    	cal.setTime(timeStamp);
+    	return cal;
+    }
     
     //获取当前时间的Timestamp
     public static Timestamp getNowTimestamp(){
@@ -104,8 +134,11 @@ public class CommFunc {
     
     //判断两个Timestamp是否为同一天
     public static boolean isTimestampSameDay(Timestamp time1, Timestamp time2){
-
-    	return true;
+    	Calendar c1 = timeStampToCalendar(time1);
+    	Calendar c2 = timeStampToCalendar(time2);
+    	
+    	if(calendarToYMD(c1) == calendarToYMD(c2)) return true;
+    	else 									   return false;
     }
     
     
