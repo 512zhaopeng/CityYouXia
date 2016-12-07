@@ -223,7 +223,15 @@ public class HelpController {
 			@RequestParam(value="content", 	required=true) String content,
 			HttpServletResponse response) throws IOException{
 		response.setCharacterEncoding("utf-8");
-		byte result = this.helpService.addHelpComment(helpId, userId, content);
+		
+		byte result = SystemDef.OPER_SUCCESS;
+		try{
+			this.helpService.addHelpComment(helpId, userId, content);
+		}
+		catch(Exception e){
+			result = SystemDef.OPER_FAIL;
+		}
+
 		response.getWriter().write(String.valueOf(result));
 		response.getWriter().flush();
 		response.getWriter().close();

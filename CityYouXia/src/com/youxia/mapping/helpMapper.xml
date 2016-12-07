@@ -4,8 +4,8 @@
 	<!-- 添加求助信息-->
 	<insert id="addHelp" parameterType="com.youxia.bean.HelpBean" useGeneratedKeys="true" keyProperty="helpId">
 		<![CDATA[
-		INSERT INTO help(categoryid, name, content, userid, area, longitude, latitude, site, help_flag, reward_points) VALUES
-		(#{categoryId}, #{name}, #{content}, #{userId}, #{area}, #{longitude}, #{latitude}, #{site}, #{helpFlag}, #{rewardPoints})
+		INSERT INTO help(categoryid, name, content, userid, area, longitude, latitude, site, help_flag, reward_points, is_solve) VALUES
+		(#{categoryId}, #{name}, #{content}, #{userId}, #{area}, #{longitude}, #{latitude}, #{site}, #{helpFlag}, #{rewardPoints}, #{isSolve})
 		]]>
 	</insert>
 	

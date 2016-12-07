@@ -13,8 +13,8 @@ public class SystemDef {
 	
 	//帮助解决标志
 	public static final byte HELP_SOLVED_ALL = 0;	//所有	
-	public static final byte HELP_SOLVED_NO  = 1;	//已解决
-	public static final byte HELP_SOLVED_YES = 2;	//未解决
+	public static final byte HELP_SOLVED_NO  = 1;	//未解决
+	public static final byte HELP_SOLVED_YES = 2;	//已解决
 	
 	//用户账号是否被锁定
 	public static final byte USER_LOCK_YES = 1;     //被锁定
@@ -23,8 +23,8 @@ public class SystemDef {
 	public static final byte USER_MAXLOGIN_TIMES = 5; //用户一天内密码输错次数
 	
 	//错误信息
-	public static final byte OPER_SUCCESS 		 = 1;	//操作成功
-	public static final byte OPER_FAIL 			 = 2;	//操作失败
+	public static final byte OPER_SUCCESS 		 = 0;	//操作成功
+	public static final byte OPER_FAIL 			 = 1;	//操作失败
 	//用户登录返回信息
 	public static final byte LOGIN_SUCCESS 		 = 3;	//登录成功
 	public static final byte LOGIN_NOUSER_ERROR  = 4;   //用户不存在

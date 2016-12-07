@@ -42,12 +42,13 @@ public class UserService {
 	/**
 	 * 用户名密码登录
 	 * */
-	public JSONObject loginCheckUser(String userName, String password){
+	public JSONObject loginCheckUserByMobile(String mobile, String password){
 		JSONObject json = new JSONObject(); 
 		
-		UserBean user = this.userDao.queryUserByName(userName);
+		UserBean user = this.userDao.queryUserByMobile(mobile);
 		if(user == null){
 			json.put("errorCode", SystemDef.LOGIN_NOUSER_ERROR);
+			json.put("errorDesc", "用户不存在！");
 			return json;
 		}
 		
@@ -57,6 +58,7 @@ public class UserService {
 		if(user.getIsLocked() == SystemDef.USER_LOCK_YES 
 				&& CommFunc.isTimestampSameDay(lockedDate, CommFunc.getNowTimestamp())){
 			json.put("errorCode", SystemDef.LOGIN_LOCK_ERROR);
+			json.put("errorDesc", "今日账户已经被锁定！");
 		}
 		else{
 			UserBean userNew = new UserBean();
@@ -77,7 +79,6 @@ public class UserService {
 				int loginFailCount = user.getLoginFailCount();
 				//达到最大登录次数
 				if(loginFailCount + 1 == SystemDef.USER_MAXLOGIN_TIMES){
-					json.put("errorCode", SystemDef.LOGIN_PWD_ERROR);
 					json.put("errorDesc", "密码错误，今日账户已经被锁定！");
 					//更新用户状态
 					userNew.setUserId(user.getUserId());
@@ -86,7 +87,6 @@ public class UserService {
 					userNew.setLoginCount(0);							//失败次数置0
 				}
 				else{
-					json.put("errorCode", SystemDef.LOGIN_PWD_ERROR);
 					int remainCount = SystemDef.USER_MAXLOGIN_TIMES - loginFailCount - 1;
 					json.put("errorDesc", "密码错误，还有" + remainCount + "次机会");
 					//更新用户状态

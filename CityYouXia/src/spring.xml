@@ -90,7 +90,7 @@
 
 	<!-- 事务拦截 -->
 	<aop:config>
-		<aop:advisor pointcut="execution(* com.youxia.service.HelpService.add*(..))"	advice-ref="txAdvice" />
+		<aop:advisor pointcut="execution(* com.youxia.service.HelpService.addHelpComment(..))"	advice-ref="txAdvice" />
 	</aop:config>
 
 

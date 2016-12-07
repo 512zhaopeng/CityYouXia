@@ -135,7 +135,6 @@ public class HelpService {
 		bean.setLongitude(longitude);
 		bean.setLatitude(latitude);
 		bean.setRewardPoints(rewardPoints);
-		bean.setIsSolve((byte)1);				//1=未解决 2=已解决
 		
 		int helpId = helpDao.addHelpToId(bean);
 		if(fileArray == null) 
@@ -171,6 +170,29 @@ public class HelpService {
 		if(helpDao.updateHelp(bean)) return SystemDef.OPER_SUCCESS;
 		else					     return SystemDef.OPER_FAIL;
 	}
+	
+	/**
+	 * 更新评论次数
+	 * */
+	public byte updateHelpCommentCount(int helpId, int nowCount, int count){
+		HelpBean bean = new HelpBean();
+		bean.setHelpId(helpId);
+		bean.setCommentCount(nowCount + count);
+		if(helpDao.updateHelp(bean)) return SystemDef.OPER_SUCCESS;
+		else					     return SystemDef.OPER_FAIL;
+	}
+	
+	/**
+	 * 更新浏览次数
+	 * */
+	public byte updateHelpViewCount(int helpId,  int nowCount, int count){
+		HelpBean bean = new HelpBean();
+		bean.setHelpId(helpId);
+		bean.setViewCount(nowCount + count);
+		if(helpDao.updateHelp(bean)) return SystemDef.OPER_SUCCESS;
+		else					     return SystemDef.OPER_FAIL;
+	}
+	
 	
 	/**
 	 * 获取帮助信息列表(根据categoryId(1=道路救援 2=寻人)和isSolve(1=未解决 2=已解决))
@@ -222,11 +244,17 @@ public class HelpService {
 	}
 	
 	/**
-	 * 获取help详细信息
+	 * 获取help详细信息,更新浏览次数
 	 * */
 	public JSONObject queryHelpDetail(int helpId){
 		HelpBean bean = this.helpDao.queryHelpDetail(helpId);
-		if(bean != null) return bean.toItemJSON();
+		if(bean != null){
+			bean.setHelpId(helpId);
+			bean.setViewCount(bean.getViewCount() + 1);
+			this.helpDao.updateHelp(bean);
+			
+			return bean.toItemJSON();
+		}
 		else return null;
 	}
 	
@@ -262,18 +290,19 @@ public class HelpService {
 	}
 	
 	/**
-	 * 添加评论信息
+	 * 添加评论信息,更新评论次数
 	 * */
-	public byte addHelpComment(int helpId, int userId, String content){
+	public void addHelpComment(int helpId, int userId, String content){
 		HelpCommentBean bean = new HelpCommentBean();
 		bean.setHelpId(helpId);
 		bean.setContent(content);
 		bean.setUserId(userId);
 		
-		if(this.helpDao.addHelpComment(bean))
-			return SystemDef.OPER_SUCCESS;
-		else
-			return SystemDef.OPER_FAIL;
+		HelpBean help = this.helpDao.queryHelpDetail(helpId);
+		help.setCommentCount(help.getCommentCount() + 1);
+		
+		this.helpDao.addHelpComment(bean);
+		this.helpDao.updateHelp(help);
 	}
 	
 	/**

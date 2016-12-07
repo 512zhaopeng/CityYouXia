@@ -20,7 +20,7 @@ public class UserServiceTest {
 	
 	@Test
 	public void loginCheckUser(){
-		System.out.println(service.loginCheckUser("zhangsan", "123456"));
+		System.out.println(service.loginCheckUserByMobile("15122036965", "1234567"));
 	}
 	
 	

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 import com.youxia.util.CommFunc;
+import com.youxia.util.SystemDef;
 
 import net.sf.json.JSONObject;
 
@@ -28,7 +29,7 @@ public class HelpBean implements Serializable {
 	private String 		helpUserName = "";	//救助人名称	
 	private Timestamp 	helpDate;			//救助日期
 	private Integer 	rewardPoints = 0; 	//悬赏分
-	private Byte 		isSolve = 0;		//是否解决 0=未解决 1=已解决 
+	private Byte 		isSolve = SystemDef.HELP_SOLVED_NO;		//是否解决 1=未解决 2=已解决 
 	private Integer 	viewCount = 0;		//浏览次数	
 	private Integer 	commentCount = 0;	//评论次数
 	private Timestamp 	createDate;			//创建日期

@@ -27,7 +27,7 @@ public class HelpServiceTest {
 		System.out.println(this.service.queryRoadRescueList(1, 5));
 	}
 	
-	@Test
+	//@Test
 	public void queryHelpDetail(){
 		System.out.println(this.service.queryHelpDetail(4));
 	}
@@ -61,12 +61,12 @@ public class HelpServiceTest {
 	
 	//@Test
 	public void addHelpComment(){
-		System.out.println(this.service.addHelpComment(2, 2, "就该这样！"));
+		this.service.addHelpComment(1, 2, "哈啊！");
 	}
 	
 	//@Test
-	public void addPeopleSearchHelp(){
-		//System.out.println(this.service.addPeopleSearchHelp(2, "小豆芽找不到家了", 2, "小豆芽在体育大街和槐安路附近的世纪公园找不到爸爸妈妈了，现在在万达星巴克和警察阿姨喝咖啡吧,爹妈速来认领!", 65, "红旗大街南三环", 117.165, 32.051, 30));
+	public void addPeopleSearchHelp() throws IOException{
+		System.out.println(this.service.addPeopleSearchHelp(1, "李老太失踪了", "一边走一边吃，一愣，人没了!", 65, "裕华路省政府门口吧", 117.236, 32.135, 30, null));
 	}
 	
 	//@Test
@@ -77,6 +77,11 @@ public class HelpServiceTest {
 	//@Test
 	public void queryPeopleSearchDetail(){
 		System.out.println(this.service.queryPeopleSearchDetail(7));
+	}
+	
+	//@Test
+	public void refreshPeopleSearchList(){
+		System.out.println(this.service.refreshPeopleSearchList(7));
 	}
 	
 	
