@@ -22,20 +22,26 @@ public class HelpServiceTest {
 	@Resource(name="helpService")
 	private HelpService service;
 	
-	@Test
+	//@Test
 	public void queryHelpList(){
 		System.out.println(this.service.queryRoadRescueList(1, 5));
 	}
 	
-	//@Test
+	@Test
 	public void queryHelpDetail(){
-		System.out.println(this.service.queryHelpDetail(1));
+		System.out.println(this.service.queryHelpDetail(4));
 	}
 	
 	//@Test
 	public void queryHelpImageList(){
 		System.out.println(this.service.queryHelpImageList(1, 1, 10));
 	}
+	
+	//@Test
+	public void refreshHelpList(){
+		System.out.println(this.service.refreshHelpList(1, 2));
+	}
+	
 	
 	//@Test
 	public void queryHelpCommentList(){

@@ -41,6 +41,13 @@ public class HelpService {
 	}
 	
 	/**
+	 * 刷新道路救援列表
+	 * */
+	public JSONArray refreshRoadRescueList(int helpId){
+		return refreshHelpList(SystemDef.HELPTYPE_ROADRESCUE, helpId);
+	}
+	
+	/**
 	 * 获取道路救援(未解决列表)
 	 * */
 	public JSONArray queryRoadRescueUnsolveList(int nowPage, int pageSize){
@@ -79,6 +86,13 @@ public class HelpService {
 	 * */
 	public JSONArray queryPeopleSearchList(int nowPage, int pageSize){
 		return queryHelpList(SystemDef.HELPTYPE_PEOPLESEARCH, SystemDef.HELP_SOLVED_ALL, nowPage, pageSize);
+	}
+	
+	/**
+	 * 刷新寻人列表
+	 * */
+	public JSONArray refreshPeopleSearchList(int helpId){
+		return refreshHelpList(SystemDef.HELPTYPE_PEOPLESEARCH, helpId);
 	}
 	
 	/**
@@ -168,6 +182,28 @@ public class HelpService {
 		}
 			
 		List<HelpBean> list = this.helpDao.queryHelpList(categoryId, isSolve, startIndex, pageSize);
+		if(list == null) return null;
+		JSONArray j_array = new JSONArray();
+		JSONObject json = null;
+		for(HelpBean bean : list){
+			json = bean.toListJSON();
+			List<HelpImageBean> imageList = this.helpDao.queryHelpImageList(bean.getHelpId(), -1, -1);
+			//添加所含图片总个数和首张图片url
+			if(imageList != null && !imageList.isEmpty()){
+				json.put("helpPhotoCount",imageList.size());
+				json.put("helpPhotoUrl", imageList.get(0).getImageUrl());
+			}
+			
+			j_array.add(json);
+		}
+		return j_array;
+	}
+	
+	/**
+	 * 刷新帮助列表
+	 * */
+	public JSONArray refreshHelpList(int categoryId, int helpId){
+		List<HelpBean> list = this.helpDao.refreshHelpList(categoryId, helpId);
 		if(list == null) return null;
 		JSONArray j_array = new JSONArray();
 		JSONObject json = null;

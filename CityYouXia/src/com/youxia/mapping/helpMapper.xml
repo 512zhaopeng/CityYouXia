@@ -95,8 +95,25 @@
 		<if test="startIndex!=-1 and pageSize != -1">
 			LIMIT #{startIndex}, #{pageSize}
 		</if>
-		
 	</select>
+
+	<!-- 刷新求助信息(列表/详细信息),联合查询发布者信息 -->
+	<select id="refreshHelpList" parameterType="map" resultType="com.youxia.bean.HelpBean">
+		SELECT help.helpid AS helpId, help.categoryid AS categoryId, help.name, help.content, help.userid AS userId, help.area, help.longitude, help.latitude, help.site,
+		help.help_flag AS helpFlag, help.help_userid AS helpUserId, help.help_username AS helpUserName, help.help_date AS helpDate, help.reward_points AS rewardPoints,
+		help.is_solve AS isSolve, help.viewcount AS viewCount, help.commentcount AS commentCount, help.create_date AS createDate, 
+		users.username AS createUserName, users.nickname AS createUserNickName, users.imageurl AS userPhoto, users.sex FROM help JOIN users ON help.userid = users.userid 
+		<where>
+		 <if test="helpId != 0">
+			helpid > #{helpId}		 
+		 </if>
+		 <if test="categoryId != 0">
+		 	AND categoryid = #{categoryId}
+		 </if>
+		 </where>
+		 ORDER BY createDate DESC
+	</select>
+
 	
 	<!-- 查询帮助图片 -->
 	<select id="queryHelpImages" parameterType="int" resultType="com.youxia.bean.HelpImageBean">

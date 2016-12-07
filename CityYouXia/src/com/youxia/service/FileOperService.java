@@ -50,7 +50,7 @@ public class FileOperService {
 		out.close();
 
         //添加图片到数据库
-        byte result = this.helpService.addHelpImage(helpId, name, SystemDef.HELPIMAGE_BASEPATH + "/" + fileName.toString());
+        byte result = this.helpService.addHelpImage(helpId, name, SystemDef.HELPIMAGE_BASEPATH + "/" + CommFunc.nowYMDInt() + "/" + fileName.toString());
         if(result == SystemDef.OPER_SUCCESS)
         	return 0;  //成功
         else

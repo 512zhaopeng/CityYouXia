@@ -121,6 +121,24 @@ public class HelpController {
 	}
 	
 	/**
+	 * 刷新道路救援列表
+	 * */
+	@RequestMapping(value="/refreshRoadRescueList", method= RequestMethod.GET)
+	public void refreshRoadRescueList(
+			@RequestParam(value="helpId", 	  required=true) int helpId,
+			HttpServletResponse response) throws IOException{
+		response.setCharacterEncoding("utf-8");
+		JSONArray json = this.helpService.refreshRoadRescueList(helpId);
+		String result = "";
+		if(json != null) result = json.toString();
+		
+		response.getWriter().write(result);
+		response.getWriter().flush();
+		response.getWriter().close();
+	}
+	
+	
+	/**
 	 * 获取道路救援(未解决列表)
 	 * */
 	@RequestMapping(value = "/queryRoadRescueUnsolve", method= RequestMethod.GET)
@@ -328,6 +346,23 @@ public class HelpController {
 		response.getWriter().flush();
 		response.getWriter().close();
 		
+	}
+	
+	/**
+	 * 刷新寻人列表
+	 * */
+	@RequestMapping(value="/refreshFindPeopleList", method= RequestMethod.GET)
+	public void refreshPeopleSearchList(
+			@RequestParam(value="helpId", 	  required=true) int helpId,
+			HttpServletResponse response) throws IOException{
+		response.setCharacterEncoding("utf-8");
+		JSONArray json = this.helpService.refreshPeopleSearchList(helpId);
+		String result = "";
+		if(json != null) result = json.toString();
+		
+		response.getWriter().write(result);
+		response.getWriter().flush();
+		response.getWriter().close();
 	}
 	
 	/**

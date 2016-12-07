@@ -71,6 +71,28 @@ public class HelpDao {
 	}
 	
 	/**
+	 * 刷新求助信息(列表/详细信息),联合查询发布者信息
+	 * */
+	public List<HelpBean> refreshHelpList(int categoryId, int helpId){
+		String statement = "com.youxia.mapping.helpMapper.refreshHelpList";
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("helpId", helpId);
+		param.put("categoryId", categoryId);
+		
+		List<Object> listDB = this.baseDao.queryList(statement, helpParamFormat(param));
+		if(!listDB.isEmpty()){
+			List<HelpBean> list = new ArrayList<HelpBean>();
+			for(Object obj : listDB){
+				list.add((HelpBean)obj);
+			}
+			return list;
+		}
+		else
+			return null;
+	}
+
+	
+	/**
 	 * 获取帮助详细信息 
 	 * */
 	public HelpBean queryHelpDetail(int helpId){
