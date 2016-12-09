@@ -22,8 +22,8 @@ public class HelpServiceTest {
 	@Resource(name="helpService")
 	private HelpService service;
 	
-	//@Test
-	public void queryHelpList(){
+	@Test
+	public void queryRoadRescueList(){
 		System.out.println(this.service.queryRoadRescueList(1, 5));
 	}
 	

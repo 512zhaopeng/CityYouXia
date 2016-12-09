@@ -209,11 +209,11 @@ public class HelpService {
 		JSONObject json = null;
 		for(HelpBean bean : list){
 			json = bean.toListJSON();
-			List<HelpImageBean> imageList = this.helpDao.queryHelpImageList(bean.getHelpId(), -1, -1);
+			List<String> imageList = this.helpDao.queryHelpImageUrlList(bean.getHelpId(), -1, -1);
 			//添加所含图片总个数和首张图片url
 			if(imageList != null && !imageList.isEmpty()){
 				json.put("helpPhotoCount",imageList.size());
-				json.put("helpPhotoUrl", imageList.get(0).getImageUrl());
+				json.put("helpPhotoUrl", imageList);
 			}
 			
 			j_array.add(json);

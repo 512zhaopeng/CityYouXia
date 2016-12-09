@@ -168,6 +168,30 @@ public class HelpDao {
 	}
 	
 	/**
+	 * 获取帮助图片url
+	 * */
+	public List<String> queryHelpImageUrlList(int helpId, int startIndex, int pageSize){
+		String statement = "com.youxia.mapping.helpMapper.queryHelpImages";
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("helpId", helpId);
+		param.put("startIndex", startIndex);
+		param.put("pageSize", pageSize);
+		List<Object> listDB = this.baseDao.queryList(statement, param);
+		if(!listDB.isEmpty()){
+			List<String> list = new ArrayList<String>();
+			HelpImageBean bean = null;
+			for(Object obj : listDB){
+				bean = (HelpImageBean)obj;
+				list.add(bean.getImageUrl());
+			}
+			return list;
+		}
+		else
+			return null;
+	}
+	
+	
+	/**
 	 * 添加help评论
 	 * */
 	public boolean addHelpComment(HelpCommentBean bean){
