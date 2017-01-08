@@ -10,6 +10,7 @@ public class SystemDef {
 	//帮助类型
 	public static final byte HELPTYPE_ROADRESCUE   = 1;		//道路救援
 	public static final byte HELPTYPE_PEOPLESEARCH = 2;		//寻人
+	public static final byte HELPTYPE_SOMETHINGSEARCH = 3;	//寻物 
 	
 	//帮助解决标志
 	public static final byte HELP_SOLVED_ALL = 0;	//所有	

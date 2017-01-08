@@ -118,6 +118,51 @@ public class HelpService {
 	
 	//--------------------寻人--结束-------------------------\\
 
+	//--------------------寻物--开始-------------------------\\
+	/**
+	 * 添加寻物信息
+	 * @throws IOException 
+	 * */
+	public byte addFindThingHelp(int userId, String name, String content, 
+			int area, String site, double longitude, double latitude, int rewardPoints, MultipartFile[] fileArray) throws IOException{
+		return addHelp(userId, name, SystemDef.HELPTYPE_SOMETHINGSEARCH, content, area, site, longitude, latitude, rewardPoints, fileArray);
+	}
+	
+	/**
+	 * 寻物列表(所有)
+	 * */
+	public JSONArray queryFindThingList(int nowPage, int pageSize){
+		return queryHelpList(SystemDef.HELPTYPE_SOMETHINGSEARCH, SystemDef.HELP_SOLVED_ALL, nowPage, pageSize);
+	}
+	
+	/**
+	 * 刷新寻物列表
+	 * */
+	public JSONArray refreshFindThingList(int helpId){
+		return refreshHelpList(SystemDef.HELPTYPE_SOMETHINGSEARCH, helpId);
+	}
+	
+	/**
+	 * 获取寻物列表(未解决列表)
+	 * */
+	public JSONArray queryFindThingUnsolveList(int nowPage, int pageSize){
+		return queryHelpList(SystemDef.HELPTYPE_SOMETHINGSEARCH, SystemDef.HELP_SOLVED_NO, nowPage, pageSize);
+	}
+	
+	/**
+	 * 获取寻物列表(已解决列表)
+	 * */
+	public JSONArray queryFindThingSolvedList(int nowPage, int pageSize){
+		return queryHelpList(SystemDef.HELPTYPE_SOMETHINGSEARCH, SystemDef.HELP_SOLVED_YES, nowPage, pageSize);
+	}
+	
+	/**
+	 * 获取寻物详细信息
+	 * */
+	public JSONObject queryFindThingDetail(int helpId){
+		return queryHelpDetail(helpId);
+	}
+	//--------------------寻物--结束-------------------------\\
 	
 	/**
 	 * 添加求助信息 
@@ -147,7 +192,6 @@ public class HelpService {
 				fileOperService.uploadHelpImage(fileArray[i], helpId, name);
 			}
 		}
-		
 		
 		return SystemDef.OPER_SUCCESS;
 	}

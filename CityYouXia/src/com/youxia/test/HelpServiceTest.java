@@ -22,7 +22,7 @@ public class HelpServiceTest {
 	@Resource(name="helpService")
 	private HelpService service;
 	
-	@Test
+	//@Test
 	public void queryRoadRescueList(){
 		System.out.println(this.service.queryRoadRescueList(1, 5));
 	}
@@ -61,7 +61,7 @@ public class HelpServiceTest {
 	
 	//@Test
 	public void addHelpComment(){
-		this.service.addHelpComment(1, 2, "哈啊！");
+		this.service.addHelpComment(12, 2, "没事，他爸有的是钱！");
 	}
 	
 	//@Test
@@ -82,6 +82,27 @@ public class HelpServiceTest {
 	//@Test
 	public void refreshPeopleSearchList(){
 		System.out.println(this.service.refreshPeopleSearchList(7));
+	}
+	
+	//寻物
+	//@Test
+	public void addFindThingHelp() throws IOException{
+		System.out.println(this.service.addFindThingHelp(1, "给思聪卖的棒棒糖丢了", "忙着看美女，思聪的糖给落到公交车上了！", 39, "桥西区益友百货62路", 114.2301, 35.4512, 30, null));
+	}
+	
+	//@Test
+	public void queryFindThingList(){
+		System.out.println(this.service.queryFindThingList(-1, -1));
+	}
+	
+	//@Test
+	public void refreshFindThingList(){
+		System.out.println(this.service.refreshFindThingList(11));
+	}
+	
+	//@Test
+	public void queryFindThingDetail(){
+		System.out.println(this.service.queryFindThingDetail(12));
 	}
 	
 	

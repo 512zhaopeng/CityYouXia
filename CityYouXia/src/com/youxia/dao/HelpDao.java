@@ -177,17 +177,19 @@ public class HelpDao {
 		param.put("startIndex", startIndex);
 		param.put("pageSize", pageSize);
 		List<Object> listDB = this.baseDao.queryList(statement, param);
+		List<String> list = new ArrayList<String>();
 		if(!listDB.isEmpty()){
-			List<String> list = new ArrayList<String>();
 			HelpImageBean bean = null;
 			for(Object obj : listDB){
 				bean = (HelpImageBean)obj;
 				list.add(bean.getImageUrl());
 			}
-			return list;
 		}
-		else
-			return null;
+		else{
+			list.add("");
+		}
+			
+		return list;
 	}
 	
 	
